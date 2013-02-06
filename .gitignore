@@ -1,0 +1,7 @@
+*.gem
+*.idea
+.bundle
+tmp
+.yardoc
+_yardoc
+doc/
