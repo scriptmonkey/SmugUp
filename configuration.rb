@@ -7,8 +7,8 @@ class Configuration
 
   def initialize(f="~/.SmugUp/smugup.conf")
     @config_file = f
-                       
   end
 
+  
 
 end
