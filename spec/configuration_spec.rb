@@ -7,7 +7,7 @@ describe Configuration do
   end
 
   it "should respond to config_file" do
-    @c.should respond_to(:config_file)
+    @c.should respond_to(:config_file_name)
   end
 
   it "should respond to api_key" do
@@ -27,13 +27,34 @@ describe Configuration do
   end
 
   it "should have a default location of accept a location of ~/.SmugUp/smugup.conf" do
-    @c.config_file.should == "~/.SmugUp/smugup.conf"
+    @c.config_file_name.should == "~/.SmugUp/smugup.conf"
   end
 
   it "should accept a location of a config file when created" do
     c = Configuration.new("~/.SmugUp/some_other.conf")
-    c.config_file.should == "~/.SmugUp/some_other.conf"
+    c.config_file_name.should == "~/.SmugUp/some_other.conf"
   end
+
+  context "when providing a nonexistant file name" do
+    before do
+     @c = Configuration.new("./spec/support/ohno.conf")
+   end
+
+   it "should have the proper default api_key" do
+     @c.api_key.should == "default_api_key"
+   end
+   it "should have the proper default api_secret" do
+     @c.api_secret.should == "default_api_secret"
+   end
+   it "should have the proper default user_token" do
+     @c.user_token.should == "default_user_token"
+   end
+   it "should have the proper default user_secret" do
+     @c.user_secret.should == "default_user_scret"
+   end
+
+  end
+
 
   context "when reading the test config file" do
 
