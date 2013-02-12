@@ -37,21 +37,25 @@ describe Configuration do
 
   context "when providing a nonexistant file name" do
     before do
-     @c = Configuration.new("./spec/support/ohno.conf")
-   end
+      @c = Configuration.new("./spec/support/ohno.conf")
+    end
 
-   it "should have the proper default api_key" do
-     @c.api_key.should == "default_api_key"
-   end
-   it "should have the proper default api_secret" do
-     @c.api_secret.should == "default_api_secret"
-   end
-   it "should have the proper default user_token" do
-     @c.user_token.should == "default_user_token"
-   end
-   it "should have the proper default user_secret" do
-     @c.user_secret.should == "default_user_scret"
-   end
+    it "should have the proper default api_key" do
+      @c.api_key.should == "default_api_key"
+    end
+    it "should have the proper default api_secret" do
+      @c.api_secret.should == "default_api_secret"
+    end
+    it "should have the proper default user_token" do
+      @c.user_token.should == "default_user_token"
+    end
+    it "should have the proper default user_secret" do
+      @c.user_secret.should == "default_user_scret"
+    end
+
+    it "should report being default" do
+      @c.should be_default
+    end
 
   end
 
@@ -60,20 +64,24 @@ describe Configuration do
 
     before do
      @c = Configuration.new("./spec/support/test.conf")
-   end
+    end
 
-   it "should have the proper api_key" do
-     @c.api_key.should == "1234api_key"
-   end
-   it "should have the proper api_secret" do
-     @c.api_secret.should == "6789api_secret"
-   end
-   it "should have the proper user_token" do
-     @c.user_token.should == "4242user_token"
-   end
-   it "should have the proper user_secret" do
-     @c.user_secret.should == "4545user_scret"
-   end
+    it "should have the proper api_key" do
+      @c.api_key.should == "1234api_key"
+    end
+    it "should have the proper api_secret" do
+      @c.api_secret.should == "6789api_secret"
+    end
+    it "should have the proper user_token" do
+      @c.user_token.should == "4242user_token"
+    end
+    it "should have the proper user_secret" do
+      @c.user_secret.should == "4545user_scret"
+    end
+    it "should not report being default" do
+      @c.should_not be_default
+    end
+
   end
 
   context "when needing to write config changes" do
@@ -95,4 +103,6 @@ describe Configuration do
       File.delete("./spec/support/write_config_test.conf")
     end
   end
+
+
 end

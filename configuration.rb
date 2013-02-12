@@ -27,6 +27,10 @@ class Configuration
     @user_secret = "default_user_scret"
   end
 
+  def default?
+    @api_key == "default_api_key" or @api_secret == "default_api_secret"
+  end
+
   def read_config
     h = JSON.parse(IO.read(@config_file_name))
 

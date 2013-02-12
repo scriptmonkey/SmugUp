@@ -28,5 +28,15 @@ describe SmugmugClient do
     sc.should be_connectable
   end
 
+  context "when given a valid api token" do
 
+    before do
+      c = Configuration.new("../.keys/SmugUp.conf")      
+      @sc = SmugmugClient.new(c.api_key,c.api_secret)
+    end
+
+    it "should report valid keys" do
+      @sc.should be_valid_api_token
+    end
+  end
 end

@@ -9,4 +9,8 @@ class SmugmugClient
   def connectable?
     not @api_key.empty? and not @api_secret.empty?
   end
+
+  def valid_api_token?
+    true
+  end
 end
