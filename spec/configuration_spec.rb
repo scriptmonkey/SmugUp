@@ -75,4 +75,24 @@ describe Configuration do
      @c.user_secret.should == "4545user_scret"
    end
   end
+
+  context "when needing to write config changes" do
+    it "should write out a proper config file" do
+
+      #there has to be a better way to do this test, right?
+
+      c = Configuration.new("./spec/support/write_config_test.conf")
+      c.api_key = "new_api_key"
+      c.api_secret = "new_api_secret"
+      c.user_token = "new_user_token"
+      c.user_secret = "new_user_secret"
+      c.save_config
+      d = Configuration.new("./spec/support/write_config_test.conf")
+      d.api_key.should == "new_api_key"
+      d.api_secret.should == "new_api_secret"
+      d.user_token.should == "new_user_token"
+      d.user_secret.should == "new_user_secret"
+      File.delete("./spec/support/write_config_test.conf")
+    end
+  end
 end
