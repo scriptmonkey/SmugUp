@@ -30,7 +30,10 @@ class Configuration
   def read_config
     h = JSON.parse(IO.read(@config_file_name))
 
-    puts h
+    @api_key = h["api_key"]
+    @api_secret = h["api_secret"]
+    @user_token = h["user_token"]
+    @user_secret = h["user_secret"]
 
   end
 

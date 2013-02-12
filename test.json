@@ -1,1 +1,1 @@
-{"api_key"=>"1234api_key", "api_secret"=>"6789api_secret", "user_token"=>"4242user_token", "user_secret"=>"545user_scret"}
+{"api_key":"default_api_key","api_secret":"default_api_secret","user_token":"default_user_token","user_secret":"default_user_scret"}

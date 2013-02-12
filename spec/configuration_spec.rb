@@ -6,7 +6,7 @@ describe Configuration do
     @c = Configuration.new
   end
 
-  it "should respond to config_file" do
+  it "should respond to config_file_name" do
     @c.should respond_to(:config_file_name)
   end
 
@@ -26,7 +26,7 @@ describe Configuration do
     @c.should respond_to(:user_secret)
   end
 
-  it "should have a default location of accept a location of ~/.SmugUp/smugup.conf" do
+  it "should have a default location of config file a location of ~/.SmugUp/smugup.conf" do
     @c.config_file_name.should == "~/.SmugUp/smugup.conf"
   end
 
