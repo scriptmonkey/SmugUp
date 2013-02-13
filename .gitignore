@@ -5,3 +5,4 @@ tmp
 .yardoc
 _yardoc
 doc/
+fixtures/cassette_library/

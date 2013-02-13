@@ -1,8 +1,7 @@
 require_relative '../smugmug_client'
+require "spec_helper"
 
-describe SmugmugClient do
-
-  #use_vcr_cassette "feed", :record => :new_episodes
+describe SmugmugClient, :vcr do
 
   before do
     @smug_client = SmugmugClient.new("key","seceret")
@@ -28,6 +27,11 @@ describe SmugmugClient do
     sc.should be_connectable
   end
 
+  it "should not report valid with invalid keys" do
+    @smug_client.should_not be_valid_api_token
+  end
+
+
   context "when given a valid api token" do
 
     before do
@@ -35,7 +39,7 @@ describe SmugmugClient do
       @sc = SmugmugClient.new(c.api_key,c.api_secret)
     end
 
-    it "should report valid keys" do
+    it "should report valid keys with a valid api token" do
       @sc.should be_valid_api_token
     end
   end
