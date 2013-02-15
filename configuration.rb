@@ -5,20 +5,13 @@ class Configuration
                 :api_secret,
                 :user_token,
                 :user_secret,
-                :config_file_name,
-                :config_file
+                :config_file_name
 
   def initialize(config_file_name="~/.SmugUp/smugup.conf")
     self.config_file_name = config_file_name
 
-    begin
-      self.config_file = File.new(config_file_name,"r")
-      read_config
-
-    rescue Errno::ENOENT => e
-      #file does not exits reset to default
-      set_to_defaults
-    end
+    set_to_defaults
+    read_config
   end
 
   def set_to_defaults
@@ -33,6 +26,7 @@ class Configuration
   end
 
   def read_config
+    return unless File.exists?(config_file_name)
     h = JSON.parse(IO.read(config_file_name))
 
     self.api_key     = h["api_key"]
