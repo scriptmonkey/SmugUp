@@ -2,32 +2,16 @@ require_relative '../configuration'
 
 describe Configuration do
 
-  before(:each) do
-    @c = Configuration.new
-  end
+  subject(:config) { Configuration.new }
 
-  it "should respond to config_file_name" do
-    @c.should respond_to(:config_file_name)
-  end
-
-  it "should respond to api_key" do
-    @c.should respond_to(:api_key)
-  end
-
-  it "should respond to api_secret" do
-    @c.should respond_to(:api_secret)
-  end
-
-  it "should respond to user_token" do
-    @c.should respond_to(:user_token)
-  end
-
-  it "should respond to user_secret" do
-    @c.should respond_to(:user_secret)
-  end
+  it {should respond_to(:config_file_name)}
+  it {should respond_to(:api_key)}
+  it {should respond_to(:api_secret)}
+  it {should respond_to(:user_token)}
+  it {should respond_to(:user_secret)}
 
   it "should have a default location of config file a location of ~/.SmugUp/smugup.conf" do
-    @c.config_file_name.should == "~/.SmugUp/smugup.conf"
+    config.config_file_name.should == "~/.SmugUp/smugup.conf"
   end
 
   it "should accept a location of a config file when created" do
@@ -36,50 +20,28 @@ describe Configuration do
   end
 
   context "when providing a nonexistant file name" do
-    before do
-      @c = Configuration.new("./spec/support/ohno.conf")
-    end
+    subject(:config) { Configuration.new("./spec/support/ohno.conf")}
 
-    it "should have the proper default api_key" do
-      @c.api_key.should == "default_api_key"
-    end
-    it "should have the proper default api_secret" do
-      @c.api_secret.should == "default_api_secret"
-    end
-    it "should have the proper default user_token" do
-      @c.user_token.should == "default_user_token"
-    end
-    it "should have the proper default user_secret" do
-      @c.user_secret.should == "default_user_scret"
-    end
+    it {config.api_key.should     == 'default_api_key'}
+    it {config.api_secret.should  == 'default_api_secret'}
+    it {config.user_token.should  == 'default_user_token'}
+    it {config.user_secret.should == 'default_user_scret'}
 
     it "should report being default" do
-      @c.should be_default
+      config.should be_default
     end
-
   end
 
-
   context "when reading the test config file" do
+    subject(:config) {Configuration.new('./spec/support/test.conf') }
 
-    before do
-     @c = Configuration.new("./spec/support/test.conf")
-    end
+    it {config.api_key.should     == '1234api_key'}
+    it {config.api_secret.should  == '6789api_secret'}
+    it {config.user_token.should  == '4242user_token'}
+    it {config.user_secret.should == '4545user_scret'}
 
-    it "should have the proper api_key" do
-      @c.api_key.should == "1234api_key"
-    end
-    it "should have the proper api_secret" do
-      @c.api_secret.should == "6789api_secret"
-    end
-    it "should have the proper user_token" do
-      @c.user_token.should == "4242user_token"
-    end
-    it "should have the proper user_secret" do
-      @c.user_secret.should == "4545user_scret"
-    end
     it "should not report being default" do
-      @c.should_not be_default
+      config.should_not be_default
     end
 
   end
@@ -103,6 +65,4 @@ describe Configuration do
       File.delete("./spec/support/write_config_test.conf")
     end
   end
-
-
 end
