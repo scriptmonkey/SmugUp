@@ -1,5 +1,6 @@
-require_relative '../ruby-smugmug/lib/ruby-smugmug'
-require "oauth"
+require 'bundler/setup'
+Bundler.require
+
 require_relative './configuration'
 
 class SmugmugClient
