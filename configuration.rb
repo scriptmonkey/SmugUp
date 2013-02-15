@@ -27,7 +27,8 @@ class Configuration
 
   def read_config
     return unless File.exists?(config_file_name)
-    h = JSON.parse(IO.read(config_file_name))
+
+    h = JSON.parse(File.read(config_file_name))
 
     self.api_key     = h["api_key"]
     self.api_secret  = h["api_secret"]
