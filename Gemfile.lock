@@ -1,0 +1,21 @@
+GIT
+  remote: git://github.com/zanker/ruby-smugmug.git
+  revision: c636cc4c01f575922f52ac9ee1e5a939059ca2aa
+  branch: master
+  specs:
+    ruby-smugmug (0.0.1)
+      json (~> 1.7.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    json (1.7.7)
+    oauth (0.4.7)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  json (~> 1.7.7)
+  oauth (~> 0.4.7)
+  ruby-smugmug!

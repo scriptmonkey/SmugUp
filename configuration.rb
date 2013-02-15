@@ -1,5 +1,3 @@
-require "json"
-
 class Configuration
   attr_reader :config_file_name
   attr_accessor :api_key,
