@@ -1,5 +1,5 @@
-require 'webmock/rspec'
-require 'vcr'
+#require 'webmock/rspec'
+#require 'vcr'
 
 #Rspec.configure.extend VCR::RSpec::Macros
 
