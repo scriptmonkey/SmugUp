@@ -1,16 +1,17 @@
 require 'bundler/setup'
+require 'ruby-smugmug'
 Bundler.require
 
 require_relative './configuration'
 
 class SmugmugClient
-  attr_reader :api_key, :api_secret
+  attr_accessor :req_token, :api_key, :api_secret, :config, :consumer, :client
 
-  def initialize(api_key="", api_secret="")
-    @api_key = api_key
-    @api_secret = api_secret
+  def initialize(config)
+    self.config = config
 
-    @consumer = OAuth::Consumer.new(api_key, api_secret,
+
+    self.consumer = OAuth::Consumer.new(config.api_key, config.api_secret,
                 { :site => 'https://api.smugmug.com',
                   :request_token_path => "/services/oauth/getRequestToken.mg",
                   :access_token_path => "/services/oauth/getAccessToken.mg",
@@ -18,19 +19,30 @@ class SmugmugClient
                   :proxy => "http://localhost:3128"
                 })
 
-  end 
 
-  def connectable?
-    not @api_key.empty? and not @api_secret.empty?
-  end
+    self.client = SmugMug::Client.new(:api_key => config.api_key,
+                             :oauth_secret => config.api_secret, 
+                             :user => {:token => config.user_token, :secret => config.user_secret},
+                             :http => {:proxy_host => 'localhost', :proxy_port => 3128}
+                             )
+
+  end 
 
   def valid_api_token?
     begin
-      req_token = @consumer.get_request_token
+      self.req_token = consumer.get_request_token
       req_token.class == OAuth::RequestToken
     rescue Exception => e
       false
     end
-
   end
+
+  def connectable?
+    begin
+      client.auth.checkAccessToken
+    rescue Exception => e
+      false
+    end
+  end
+
 end
