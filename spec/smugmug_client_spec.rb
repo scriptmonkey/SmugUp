@@ -11,8 +11,6 @@ describe SmugmugClient, :vcr do
     @smug_client = SmugmugClient.new(@config)
   end
 
-
-
   it "should not report valid with invalid keys" do
     @smug_client.should_not be_valid_api_token
   end
@@ -32,8 +30,6 @@ describe SmugmugClient, :vcr do
     it "should not report a valid connection" do
       @sc.should_not be_connectable
     end
-
-
   end
 
   context "when given a valid api token and valid user token" do
@@ -51,8 +47,13 @@ describe SmugmugClient, :vcr do
       @sc.should be_connectable
     end
 
+    it "should be able to check for the non existance of a specific Smugmug album that does not exists" do
+      @sc.album_exists?("ThisBetterNotExist").should be_false
+    end
+
+    it "should be able to check for the existance of a specific Smugmug album that does exists" do
+      @sc.album_exists?("SmugUp").should be_true
+    end
 
   end
-
-
 end

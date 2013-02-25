@@ -8,6 +8,7 @@ describe Configuration do
   it {should respond_to(:api_secret)}
   it {should respond_to(:user_token)}
   it {should respond_to(:user_secret)}
+  it {should respond_to(:upload_album)}
 
   it "should have a default location of config file a location of ~/.SmugUp/smugup.conf" do
     config.config_file_name.should == "~/.SmugUp/smugup.conf"
@@ -25,6 +26,7 @@ describe Configuration do
     it {config.api_secret.should == "default_api_secret"}
     it {config.user_token.should == "default_user_token"}
     it {config.user_secret.should == "default_user_scret"}
+    it {config.upload_album.should == "SmugUp"}
 
     it "should report being default" do
       config.should be_default
@@ -56,7 +58,7 @@ describe Configuration do
     let(:output_file) {'./spec/support/write_config_test.conf'}
     
     let(:expected_output) do
-      '{"api_key":"new_api_key","api_secret":"new_api_secret","user_token":"new_user_token","user_secret":"new_user_secret"}'
+      '{"api_key":"new_api_key","api_secret":"new_api_secret","user_token":"new_user_token","user_secret":"new_user_secret","upload_album":"new_upload_album"}'
     end
 
     after do
@@ -70,6 +72,7 @@ describe Configuration do
       c.api_secret = "new_api_secret"
       c.user_token = "new_user_token"
       c.user_secret = "new_user_secret"
+      c.upload_album = "new_upload_album"
       c.save_config
 
       File.read(output_file).should == expected_output

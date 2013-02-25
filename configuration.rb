@@ -5,13 +5,13 @@ class Configuration
                 :api_secret,
                 :user_token,
                 :user_secret,
-                :config_file_name
+                :config_file_name,
+                :upload_album
 
   def initialize(config_file_name="~/.SmugUp/smugup.conf")
     self.config_file_name = config_file_name
-
-     set_to_defaults
-     read_config
+    set_to_defaults
+    read_config
   end
 
   def set_to_defaults
@@ -19,11 +19,23 @@ class Configuration
     self.api_secret = "default_api_secret"
     self.user_token = "default_user_token"
     self.user_secret = "default_user_scret"
+    self.upload_album = "SmugUp"
   end
 
   def default?
     api_key == "default_api_key"  || api_secret == "default_api_secret"
   end
+
+  def save_config
+    f = File.open(config_file_name, "w") 
+    f.write(config_hash.to_json)
+    f.close
+  end
+
+
+
+
+
 
   def read_config
     return unless File.exists?(config_file_name)
@@ -37,17 +49,16 @@ class Configuration
 
   end
 
-  def save_config
-    config_hash = {
-                    "api_key"     => api_key,
-                    "api_secret"  => api_secret,
-                    "user_token"  => user_token,
-                    "user_secret" => user_secret
-                }
+  private
 
-    f = File.open(config_file_name, "w") 
-    f.write(config_hash.to_json)
-    f.close
+  def config_hash
+    {
+      "api_key"     => api_key,
+      "api_secret"  => api_secret,
+      "user_token"  => user_token,
+      "user_secret" => user_secret,
+      "upload_album" => upload_album
+    }    
   end
 
 end

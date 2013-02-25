@@ -45,4 +45,18 @@ class SmugmugClient
     end
   end
 
+  def album_exists?(album)
+#    client.albums.get.reduce { |there, h| h["Title"] == album}
+    !client.albums.get.select { | h| h["Title"] == album }.empty?
+
+    
+
+ #   there = false
+  #  album_list.each_entry do |h|
+   #   there = true if h["Title"] == album
+    #end
+    #there
+
+  end
+
 end
