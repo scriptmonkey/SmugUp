@@ -46,17 +46,18 @@ class SmugmugClient
   end
 
   def album_exists?(album)
-#    client.albums.get.reduce { |there, h| h["Title"] == album}
-    !client.albums.get.select { | h| h["Title"] == album }.empty?
-
-    
-
- #   there = false
-  #  album_list.each_entry do |h|
-   #   there = true if h["Title"] == album
-    #end
-    #there
-
+    begin
+      !!client.albums.get.detect { | h| h["Title"] == album }
+    rescue Exception => e
+      false
+    end
   end
 
+  def full_access?
+    begin
+      client.auth.checkAccessToken["Token"]["Access"] == "Full"  
+    rescue Exception => e
+      false
+    end
+  end
 end

@@ -55,5 +55,8 @@ describe SmugmugClient, :vcr do
       @sc.album_exists?("SmugUp").should be_true
     end
 
+    it "should be be able to check for full access" do
+      @sc.full_access?.should be_true
+    end
   end
 end
