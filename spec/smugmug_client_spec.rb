@@ -15,6 +15,14 @@ describe SmugmugClient, :vcr do
     @smug_client.should_not be_valid_api_token
   end
 
+  it "should respond to default_album" do
+    @smug_client.should respond_to(:default_album)
+  end
+
+  it "should respond to default_album_id" do
+    @smug_client.should respond_to(:default_album_id)
+  end
+
 
   context "when given a valid api token" do
 
@@ -57,6 +65,16 @@ describe SmugmugClient, :vcr do
 
     it "should be be able to check for full access" do
       @sc.full_access?.should be_true
+    end
+
+    it "should be be able to get an album_id" do
+      @sc.get_album_id("SmugUp").should == 28175709
+    end
+
+
+    it "should be able to upload an image" do
+      file = File.new("./spec/support/a.jpeg")
+      @sc.upload(file).should be_true
     end
   end
 end

@@ -5,7 +5,7 @@ Bundler.require
 require_relative './configuration'
 
 class SmugmugClient
-  attr_accessor :req_token, :api_key, :api_secret, :config, :consumer, :client
+  attr_accessor :req_token, :api_key, :api_secret, :config, :consumer, :client, :default_album, :default_album_id
 
   def initialize(config)
     self.config = config
@@ -25,6 +25,9 @@ class SmugmugClient
                              :user => {:token => config.user_token, :secret => config.user_secret},
                              :http => {:proxy_host => 'localhost', :proxy_port => 3128}
                              )
+
+    #self.default_album = "SmugUp"
+    self.default_album_id = 28175709
 
   end 
 
@@ -56,6 +59,19 @@ class SmugmugClient
   def full_access?
     begin
       client.auth.checkAccessToken["Token"]["Access"] == "Full"  
+    rescue Exception => e
+      false
+    end
+  end
+
+  def get_album_id(album)
+    a = client.albums.get.detect { | h| h["Title"] == album }
+    a["id"]
+  end
+
+  def upload(file)
+    begin
+      client.upload_media(:file => file, :AlbumID => default_album_id)
     rescue Exception => e
       false
     end
